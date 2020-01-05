@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
 import Routes from './routes/root';
+import './global.css';
 
 const App = () => (
   <Provider store={store}>

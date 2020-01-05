@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, RouteProps, BrowserRouter, Switch } from 'react-router-dom';
 
-const SliderPage = React.lazy(() => import('../pages/slider/slider'));
+const SliderPage = React.lazy(() => import('../pages/slider/main'));
 
 const Routes: React.FC<RouteProps> = () => (
   <BrowserRouter>
