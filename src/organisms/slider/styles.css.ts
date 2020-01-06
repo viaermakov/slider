@@ -7,7 +7,7 @@ interface Props {
   order?: number;
 }
 // Write your styles in `styled` tag
-export const Container = styled.div`
+export const Wrapper = styled.div`
   position: relative;
   display: flex;
   height: 100%;
@@ -15,6 +15,12 @@ export const Container = styled.div`
   border-radius: 10px;
   background: #eee;
   cursor: pointer;
+`;
+
+export const Container = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
 `;
 
 export const Cover = styled.div`
@@ -37,7 +43,7 @@ export const Tabs = styled.div`
   display: flex;
   top: 10px;
   width: 50%;
-
+  background: transparent;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;

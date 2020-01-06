@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { useAnimationFrame } from './hooks';
 
-import { Container, Cover, Canvas, Tabs, Tab, Progress, Img } from './styles.css';
+import { Container, Cover, Canvas, Tabs, Tab, Progress, Img, Wrapper } from './styles.css';
 
 export interface ISliderProps {
   images: string[];
 }
-
-export default function Slider({ images }: ISliderProps) {
-  const [position, setPosition] = React.useState<number>(0);
-  // const [position1, setPosition1] = React.useState<number>(0);
-
-  const [time, setTime] = React.useState<number>(0);
-  const [coverWidth, setCoverWidth] = React.useState<number>(919);
+const Slider: React.FC<ISliderProps> = ({ images }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const around = React.useRef<boolean>(false);
+
+  const [position, setPosition] = React.useState<number>(0);
+  const [time, setTime] = React.useState<number>(0);
+  const [coverWidth, setCoverWidth] = React.useState<number>(919);
 
   const [progressList, setProgressList] = React.useState([0, 0, 0]);
   const [orderList, setOrderList] = React.useState([1, 2, 3]);
@@ -82,7 +80,6 @@ export default function Slider({ images }: ISliderProps) {
     return (
       <Canvas transform={position * coverWidth}>
         {images.map((url, index) => {
-          console.log(index);
           return (
             <Cover order={orderList[index]} color="yellow" width={coverWidth}>
               <Img src={url}></Img>
@@ -94,9 +91,13 @@ export default function Slider({ images }: ISliderProps) {
   };
 
   return (
-    <Container ref={containerRef} onClick={handleClick}>
-      {renderTabs()}
-      {renderCanvas()}
+    <Container>
+      <Wrapper ref={containerRef} onClick={handleClick}>
+        {renderTabs()}
+        {renderCanvas()}
+      </Wrapper>
     </Container>
   );
-}
+};
+
+export default Slider;
