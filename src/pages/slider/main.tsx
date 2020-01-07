@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { Title } from './styles.css';
 import { Slider } from 'organisms/slider';
 import { Container, UserContainer, Feed, Preview } from './styles.css';
 import { Sidebar } from 'organisms/sidebar';
 import { FeedForm } from 'organisms/feedForm';
+import { Post } from 'organisms/post';
 
 export interface IMainProps {}
 
@@ -20,9 +20,18 @@ const Main: React.FC<IMainProps> = () => {
           <Slider images={images} />
         </Preview>
         <FeedForm />
+        <Post image="src/assets/1.jpg" text={t} />
+        <Post image="src/assets/1.jpg" text={t} />
+        <Post image="src/assets/1.jpg" text={t} />
+        <Post image="src/assets/1.jpg" text={t} />
       </Feed>
     </Container>
   );
 };
 
 export default Main;
+
+const t = `«Есть такой отличный фильм из бондианы, "Золотой глаз" 1995-го года. Это первый фильм с Пирсом Броснаном в роли Бонда.
+Главзлодей там Алек Тревельян, по сюжету — бывший коллега Бонда по опасному бизнесу, 
+который решил сыграть на стороне плохишей (потому что с детства затаил обиду на англичан, ведь его родители были казаками, 
+которых Британия выдала обратно СССР, после окончания Второй Мировой).`;
