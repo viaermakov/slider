@@ -67,7 +67,7 @@ const Slider: React.FC<ISliderProps> = ({ images }) => {
       <Tabs>
         {images.map((url, index) => {
           return (
-            <Tab>
+            <Tab key={url}>
               <Progress width={progressList[index]} />
             </Tab>
           );
@@ -81,7 +81,7 @@ const Slider: React.FC<ISliderProps> = ({ images }) => {
       <Canvas transform={position * coverWidth}>
         {images.map((url, index) => {
           return (
-            <Cover order={orderList[index]} color="yellow" width={coverWidth}>
+            <Cover key={url} order={orderList[index]} color="yellow" width={coverWidth}>
               <Img src={url}></Img>
             </Cover>
           );

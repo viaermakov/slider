@@ -6,9 +6,7 @@ export const Button = styled.button`
   width: 100%;
   border-radius: 5px;
   font-size: 1.3rem;
-  font-weight: bold;
   background: #f7eb22;
-  font-family: Roboto;
 
   cursor: pointer;
   :hover {

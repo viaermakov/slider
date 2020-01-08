@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Container, Image, Text, ActionText } from './styles.css';
+import { Comments } from 'organisms/comments';
 
 export interface IPostProps {
   image: string;
@@ -23,6 +24,7 @@ const Post: React.FC<IPostProps> = ({ image, text }) => {
         {isShow && text.slice(200)}
         {isShow && <ActionText onClick={handleShow}>{'  '} hide</ActionText>}
       </Text>
+      <Comments />
     </Container>
   );
 };

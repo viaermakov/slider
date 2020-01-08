@@ -6,7 +6,7 @@ interface Props {
   transform?: number;
   order?: number;
 }
-// Write your styles in `styled` tag
+
 export const Wrapper = styled.div`
   position: relative;
   display: flex;
@@ -39,24 +39,24 @@ export const Canvas = styled.div`
 `;
 
 export const Tabs = styled.div`
-  position: absolute;
   display: flex;
+  position: absolute;
   top: 10px;
+  left: 50%;
   width: 50%;
   background: transparent;
-  left: 50%;
   transform: translateX(-50%);
   z-index: 1;
 `;
 
 export const Tab = styled.div`
   position: relative;
-  z-index: 1;
-  margin: 0 4px;
   height: 3px;
   width: 100%;
+  margin: 0 4px;
   background: rgba(102, 103, 120, 1);
   border-radius: 10px;
+  z-index: 1;
 `;
 
 export const Progress = styled.div`

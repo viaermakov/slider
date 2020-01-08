@@ -7,7 +7,7 @@ import { Container, ButtonWrapper } from './styles.css';
 export interface ISidebarProps {}
 
 const Sidebar: React.FC = () => {
-  const [isFocused, setIsFocused] = React.useState<boolean>(false);
+  const [isFocused, setIsFocused] = React.useState<boolean>(true);
 
   const handleFocus = () => {
     setIsFocused(true);
