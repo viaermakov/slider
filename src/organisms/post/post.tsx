@@ -1,6 +1,16 @@
 import * as React from 'react';
 
-import { Container, Image, Text, ActionText } from './styles.css';
+import {
+  Container,
+  Image,
+  Text,
+  ActionText,
+  Author,
+  Header,
+  Avatar,
+  About,
+  Date
+} from './styles.css';
 import { Comments } from 'organisms/comments';
 
 export interface IPostProps {
@@ -17,6 +27,13 @@ const Post: React.FC<IPostProps> = ({ image, text }) => {
   };
   return (
     <Container>
+      <Header>
+        <Avatar src={'src/assets/1.jpg'} />
+        <About>
+          <Author>Olesia Scherbakova</Author>
+          <Date>12 April 2019 at 10:47 AM</Date>
+        </About>
+      </Header>
       <Image src={image}></Image>
       <Text>
         {text.slice(0, 200)}...

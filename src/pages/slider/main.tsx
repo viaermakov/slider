@@ -5,27 +5,31 @@ import { Container, UserContainer, Feed, Preview } from './styles.css';
 import { Sidebar } from 'organisms/sidebar';
 import { FeedForm } from 'organisms/feedForm';
 import { Post } from 'organisms/post';
+import { Progress } from 'organisms/progress';
 
 export interface IMainProps {}
 
 const Main: React.FC<IMainProps> = () => {
   const images = ['src/assets/1.jpg', 'src/assets/2.jpg', 'src/assets/3.jpg'];
   return (
-    <Container>
-      <UserContainer>
-        <Sidebar />
-      </UserContainer>
-      <Feed>
-        <Preview>
-          <Slider images={images} />
-        </Preview>
-        <FeedForm />
-        <Post image="src/assets/1.jpg" text={t} />
-        <Post image="src/assets/1.jpg" text={t} />
-        <Post image="src/assets/1.jpg" text={t} />
-        <Post image="src/assets/1.jpg" text={t} />
-      </Feed>
-    </Container>
+    <>
+      <Progress value={48} points={points} />
+      <Container>
+        <UserContainer>
+          <Sidebar />
+        </UserContainer>
+        <Feed>
+          <Preview>
+            <Slider images={images} />
+          </Preview>
+          <FeedForm />
+          <Post image="src/assets/1.jpg" text={t} />
+          <Post image="src/assets/1.jpg" text={t} />
+          <Post image="src/assets/1.jpg" text={t} />
+          <Post image="src/assets/1.jpg" text={t} />
+        </Feed>
+      </Container>
+    </>
   );
 };
 
@@ -35,3 +39,23 @@ const t = `«Есть такой отличный фильм из бондиан
 Главзлодей там Алек Тревельян, по сюжету — бывший коллега Бонда по опасному бизнесу, 
 который решил сыграть на стороне плохишей (потому что с детства затаил обиду на англичан, ведь его родители были казаками, 
 которых Британия выдала обратно СССР, после окончания Второй Мировой).`;
+
+interface IPoint {
+  value: number;
+  text: string;
+}
+
+const points: IPoint[] = [
+  {
+    value: 13,
+    text: 'Germany 1938 - 1945'
+  },
+  {
+    value: 23,
+    text: 'Germany 1938 - 1945'
+  },
+  {
+    value: 36,
+    text: 'Germany 1938 - 1945'
+  }
+];

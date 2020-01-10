@@ -12,8 +12,7 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
   position: relative;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+
   cursor: pointer;
 `;
 
@@ -21,6 +20,7 @@ export const Text = styled.div`
   position: relative;
   padding: 16px 8px;
   font-size: 1.1rem;
+  background: #212224;
 `;
 
 export const ActionText = styled.span`
@@ -31,4 +31,34 @@ export const ActionText = styled.span`
   :hover {
     color: #d4c80b;
   }
+`;
+export const Author = styled.div`
+  background: transparent;
+`;
+
+export const Avatar = styled.img`
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 96px;
+  background: #212224;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+`;
+
+export const About = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+`;
+
+export const Date = styled.div`
+  color: #eee;
 `;
