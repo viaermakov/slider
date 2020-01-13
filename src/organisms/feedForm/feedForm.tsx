@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Input } from 'organisms/input';
+import { TextArea } from 'organisms/textarea';
 import { Button } from 'organisms/button';
 
 import { Container, ButtonWrapper } from './styles.css';
@@ -7,7 +7,7 @@ import { Container, ButtonWrapper } from './styles.css';
 export interface ISidebarProps {}
 
 const Sidebar: React.FC = () => {
-  const [isFocused, setIsFocused] = React.useState<boolean>(true);
+  const [isFocused, setIsFocused] = React.useState<boolean>(false);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -19,7 +19,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <Container>
-      <Input onFocus={handleFocus} onBlur={handleBlur} />
+      <TextArea onFocus={handleFocus} onBlur={handleBlur} />
       <ButtonWrapper>{isFocused && <Button onClick={() => {}}>Share</Button>}</ButtonWrapper>
     </Container>
   );

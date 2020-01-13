@@ -1,12 +1,25 @@
 import * as React from 'react';
 import { Button } from './styles.css';
 
-export interface IButtonProps {
-  onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
+export interface IButtonProps extends React.ButtonHTMLAttributes<{}> {
+  autoFocus?: boolean;
+  className?: string;
+  component?: React.ElementType<any>;
+  href?: string;
+  iconAfter?: React.ReactChild;
+  iconBefore?: React.ReactChild;
+  isDisabled?: boolean;
+  isLoading?: boolean;
+  onBlur?: React.FocusEventHandler<HTMLElement>;
+  children?: React.ReactNode;
 }
 
-const ButtonComponent: React.FC<IButtonProps> = ({ onClick, children }) => {
-  return <Button onClick={onClick}>{children}</Button>;
+const ButtonComponent: React.FC<IButtonProps> = ({ onClick, type = 'submit', children }) => {
+  return (
+    <Button onClick={onClick} type={type}>
+      {children}
+    </Button>
+  );
 };
 
 export default ButtonComponent;

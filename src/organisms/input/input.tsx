@@ -1,39 +1,52 @@
 import * as React from 'react';
-import { Container, TextArea } from './styles.css';
+import { Container, Input, Label } from './styles.css';
 
-export interface ITextareaProps {
-  onFocus?: (e: React.FormEvent<HTMLTextAreaElement>) => void;
-  onBlur?: (e: React.FormEvent<HTMLTextAreaElement>) => void;
+export interface IInputProps {
+  required: boolean;
+  label?: string;
+  name: string;
+  register: Function;
+  onFocus?: (e: React.FormEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
+  isError: boolean;
+  placeholder?: string;
 }
 
-const TextareaСomponent: React.FC<ITextareaProps> = ({ onBlur, onFocus }) => {
-  const [value, setValue] = React.useState<string>('');
-  const [rows, setRows] = React.useState<number>(2);
-
-  const handleFocus = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    setRows(4);
+const TextareaСomponent: React.FC<IInputProps> = ({
+  onBlur,
+  onFocus,
+  onChange,
+  label,
+  register,
+  required,
+  name,
+  isError,
+  placeholder
+}) => {
+  const handleFocus = (e: React.FormEvent<HTMLInputElement>) => {
     onFocus && onFocus(e);
   };
 
-  const handleBlur = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    setRows(2);
+  const handleBlur = (e: React.FormEvent<HTMLInputElement>) => {
     onBlur && onBlur(e);
   };
 
-  const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    setValue(e.currentTarget.value);
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    onChange && onChange(e);
   };
 
   return (
     <Container>
-      <TextArea
-        placeholder="Share your trip..."
-        rows={rows}
-        maxLength={150}
-        value={value}
+      {label && <Label htmlFor={name}>{label}</Label>}
+      <Input
+        name={name}
+        ref={register({ required })}
+        placeholder={placeholder}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        isError={isError}
       />
     </Container>
   );
