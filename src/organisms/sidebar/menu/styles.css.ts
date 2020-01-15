@@ -8,12 +8,14 @@ export const Container = styled.div`
 
 export const Item = styled.div`
   padding: 12px 8px;
-  margin: 8px;
-  border-bottom: 1px solid #373131;
+  margin: 1rem auto;
 
   cursor: pointer;
+  transition: 0.3s;
 
   :hover {
-    border-bottom: 1px solid #f7eb22;
+    svg {
+      fill: #f7eb22;
+    }
   }
 `;

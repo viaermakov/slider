@@ -23,7 +23,7 @@ const TextareaСomponent: React.FC<IInputProps> = ({
   name,
   isError,
   placeholder
-}) => {
+}): React.ReactElement => {
   const handleFocus = (e: React.FormEvent<HTMLInputElement>) => {
     onFocus && onFocus(e);
   };

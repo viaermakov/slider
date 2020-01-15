@@ -8,7 +8,6 @@
     "./node_modules/eslint-config-airbnb-base/rules/es6.js",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "react/recommended",
     "prettier/@typescript-eslint"
   ],
   "parser": "@typescript-eslint/parser",
@@ -17,15 +16,12 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "no-unused-var": "off",
+    "no-unused-expressions": "off",
     "@typescript-eslint/interface-name-prefix": "off",
     "lines-between-class-members": "off",
     "@typescript-eslint/no-for-in-array": "warn",
-    "@typescript-eslint/explicit-function-return-type": [
-      "warn",
-      {
-        "allowExpressions": true
-      }
-    ]
+    "@typescript-eslint/explicit-function-return-type": "off"
   },
   "env": {
     "browser": true,

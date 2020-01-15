@@ -5,18 +5,20 @@ interface Props {
   color?: string;
   transform?: number;
   order?: number;
+  small?: boolean;
 }
 // Write your styles in `styled` tag
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 16px;
 `;
 
 export const Logo = styled.img`
-  border-radius: 50%;
-  height: 150px;
-  width: 150px;
+  border-radius: 20px;
+  height: ${({ small }: Props) => (small ? '65px' : '150px')};
+  width: ${({ small }: Props) => (small ? '65px' : '150px')};
   margin: 8px 0;
   object-fit: cover;
 `;

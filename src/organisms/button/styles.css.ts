@@ -1,7 +1,7 @@
 import { styled } from 'linaria/react';
 
 export const Button = styled.button`
-  height: 42px;
+  height: 48px;
   border: none;
   width: 100%;
   border-radius: 5px;

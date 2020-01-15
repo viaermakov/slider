@@ -5,11 +5,11 @@ import { Menu } from './menu';
 
 export interface ISidebarProps {}
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC = (): React.ReactElement => {
   return (
     <Container>
-      <UserInfo />
-      <Menu />
+      <UserInfo type="simple" />
+      <Menu type="simple" />
     </Container>
   );
 };

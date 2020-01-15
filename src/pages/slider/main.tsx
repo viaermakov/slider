@@ -8,11 +8,11 @@ import { Post } from 'organisms/post';
 
 export interface IMainProps {}
 
-const Main: React.FC<IMainProps> = () => {
+const Main: React.FC<IMainProps> = (): React.ReactElement => {
   const images = ['src/assets/1.jpg', 'src/assets/2.jpg', 'src/assets/3.jpg'];
   return (
     <>
-      <Container>
+      <Container type="simple">
         <UserContainer>
           <Sidebar />
         </UserContainer>

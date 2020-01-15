@@ -11,7 +11,7 @@ export const Input = styled.input<Props>`
   z-index: 2;
   position: relative;
   width: 100%;
-  height: 42px;
+  height: 48px;
   resize: none;
   box-sizing: border-box;
   appearance: none;

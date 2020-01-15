@@ -1,13 +1,17 @@
 import { styled } from 'linaria/react';
 
-// Write your styles in `styled` tag
+interface Props {
+  type: 'full' | 'simple';
+}
+
 export const Title = styled.h1`
   color: red;
 `;
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 300px 3fr 1fr;
+  grid-template-columns: ${({ type }: Props) =>
+    type === 'full' ? '300px 3fr 1fr' : '150px 3fr 1fr'};
   grid-template-rows: 1fr;
   grid-gap: 16px;
   height: 100vh;

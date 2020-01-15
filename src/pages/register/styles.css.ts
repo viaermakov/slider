@@ -8,5 +8,5 @@ export const Container = styled.div`
 export const Form = styled.form`
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 16px;
+  grid-gap: 8px;
 `;
