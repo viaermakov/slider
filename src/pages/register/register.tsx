@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { Container, Form } from './styles.css';
 import { Input } from 'organisms/input';
 import { Button } from 'organisms/button';
+import { Container, Form } from './styles.css';
 
 export interface IRegisterProps {}
 
@@ -15,10 +15,10 @@ type FormValues = {
 const Register: React.FC<IRegisterProps> = () => {
   const { register, handleSubmit, errors, getValues } = useForm<FormValues>();
 
-  const handleChange = () => {
+  const handleChange = (): void => {
     console.log(getValues());
   };
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: FormValues): void => {
     console.log(errors);
     console.log(data);
   };

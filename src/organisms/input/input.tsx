@@ -22,17 +22,17 @@ const TextareaСomponent: React.FC<IInputProps> = ({
   required,
   name,
   isError,
-  placeholder
+  placeholder,
 }): React.ReactElement => {
-  const handleFocus = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleFocus = (e: React.FormEvent<HTMLInputElement>): void => {
     onFocus && onFocus(e);
   };
 
-  const handleBlur = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleBlur = (e: React.FormEvent<HTMLInputElement>): void => {
     onBlur && onBlur(e);
   };
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     onChange && onChange(e);
   };
 

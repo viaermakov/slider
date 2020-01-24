@@ -3,6 +3,8 @@ import { useAnimationFrame } from './hooks';
 
 import { Container, Cover, Canvas, Tabs, Tab, Progress, Img, Wrapper } from './styles.css';
 
+const MAX_PROCENT = 100;
+const DEFAULT_WIDTH = 919;
 export interface ISliderProps {
   images: string[];
 }
@@ -12,17 +14,17 @@ const Slider: React.FC<ISliderProps> = ({ images }) => {
 
   const [position, setPosition] = React.useState<number>(0);
   const [time, setTime] = React.useState<number>(0);
-  const [coverWidth, setCoverWidth] = React.useState<number>(919);
+  const [coverWidth, setCoverWidth] = React.useState<number>(DEFAULT_WIDTH);
 
   const [progressList, setProgressList] = React.useState([0, 0, 0]);
-  const [orderList, setOrderList] = React.useState([1, 2, 3]);
+  const [orderList] = React.useState([1, 2, 3]);
 
   useAnimationFrame(() => {
-    setTime((prevCount) => (prevCount + 60 * 0.01) % 100);
+    setTime(prevCount => (prevCount + 60 * 0.01) % MAX_PROCENT);
   });
 
   React.useEffect(() => {
-    if (Math.round(time) === 100 && !around.current) {
+    if (Math.round(time) === MAX_PROCENT && !around.current) {
       changePosition(time);
       around.current = true;
 
@@ -31,11 +33,12 @@ const Slider: React.FC<ISliderProps> = ({ images }) => {
     if (Math.round(time) !== 100) {
       around.current = false;
     }
-    setProgressList((e) => [...e.slice(0, position), time, ...e.slice(position + 1)]);
-  }, [time, around.current, position]);
+
+    setProgressList(e => [...e.slice(0, position), time, ...e.slice(position + 1)]);
+  }, [time, position, images, changePosition]);
 
   React.useEffect(() => {
-    function handleResize() {
+    function handleResize(): void {
       setCoverWidth(containerRef.current!.offsetWidth);
     }
 
@@ -45,50 +48,45 @@ const Slider: React.FC<ISliderProps> = ({ images }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [containerRef.current]);
+  }, []);
 
-  const handleClick = () => {
+  const changePosition = React.useCallback(
+    (time = MAX_PROCENT) => {
+      if (position === images.length - 1) {
+        setProgressList([0, 0, 0]);
+        setPosition(0);
+      } else {
+        setPosition(e => e + 1);
+        setProgressList(e => [...e.slice(0, position), Math.round(time), ...e.slice(position + 1)]);
+      }
+    },
+    [position, images],
+  );
+
+  const handleClick = (): void => {
     changePosition();
     setTime(0);
   };
 
-  const changePosition = (time: number = 100) => {
-    if (position === images.length - 1) {
-      setProgressList([0, 0, 0]);
-      setPosition(0);
-    } else {
-      setPosition((e) => e + 1);
-      setProgressList((e) => [...e.slice(0, position), Math.round(time), ...e.slice(position + 1)]);
-    }
-  };
+  const renderTabs = (): React.ReactElement => (
+    <Tabs>
+      {images.map((url, index) => (
+        <Tab key={url}>
+          <Progress width={progressList[index]} />
+        </Tab>
+      ))}
+    </Tabs>
+  );
 
-  const renderTabs = () => {
-    return (
-      <Tabs>
-        {images.map((url, index) => {
-          return (
-            <Tab key={url}>
-              <Progress width={progressList[index]} />
-            </Tab>
-          );
-        })}
-      </Tabs>
-    );
-  };
-
-  const renderCanvas = () => {
-    return (
-      <Canvas transform={position * coverWidth}>
-        {images.map((url, index) => {
-          return (
-            <Cover key={url} order={orderList[index]} color="yellow" width={coverWidth}>
-              <Img src={url}></Img>
-            </Cover>
-          );
-        })}
-      </Canvas>
-    );
-  };
+  const renderCanvas = (): React.ReactElement => (
+    <Canvas transform={position * coverWidth}>
+      {images.map((url, index) => (
+        <Cover key={url} order={orderList[index]} color="yellow" width={coverWidth}>
+          <Img src={url}></Img>
+        </Cover>
+      ))}
+    </Canvas>
+  );
 
   return (
     <Container>
