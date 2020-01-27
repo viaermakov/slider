@@ -8,18 +8,15 @@ export interface ICommentProps {
   message: string;
 }
 
-const Comment: React.FC<ICommentProps> = ({ avatar, author, message }) => {
-  return (
-    <Container>
-      <Row>
-        <Avatar src={avatar} />
-        <TextBlock>
-          <AuthorText color="#f7eb22">{author},</AuthorText>
-          <Text>{message}</Text>
-        </TextBlock>
-      </Row>
-      <Row>Like</Row>
-    </Container>
-  );
-};
+const Comment: React.FC<ICommentProps> = ({ avatar, author, message }) => (
+  <Container>
+    <Row>
+      <Avatar src={avatar} />
+      <TextBlock>
+        <AuthorText color="#f7eb22">{author},</AuthorText>
+        <Text>{message}</Text>
+      </TextBlock>
+    </Row>
+  </Container>
+);
 export default Comment;

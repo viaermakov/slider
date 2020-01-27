@@ -4,14 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: ['./src/index.tsx']
+    index: ['./src/index.tsx'],
   },
 
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].[hash].bundle.js',
     chunkFilename: '[id].js',
-    publicPath: '/'
+    publicPath: '/',
   },
 
   resolve: {
@@ -19,8 +19,8 @@ module.exports = {
     alias: {
       src: path.resolve(__dirname, '../src'),
       organisms: path.resolve(__dirname, '../src/organisms'),
-      icons: path.resolve(__dirname, '../src/icons')
-    }
+      icons: path.resolve(__dirname, '../src/icons'),
+    },
   },
 
   module: {
@@ -33,17 +33,17 @@ module.exports = {
           {
             loader: 'linaria/loader',
             options: {
-              sourceMap: process.env.NODE_ENV !== 'production'
-            }
+              sourceMap: process.env.NODE_ENV !== 'production',
+            },
           },
-          'ts-loader'
-        ]
+          'ts-loader',
+        ],
       },
       {
         test: /\.(html)$/,
         use: {
-          loader: 'html-loader'
-        }
+          loader: 'html-loader',
+        },
       },
       {
         test: /\.(png|jpg|gif|jpeg|ttf)$/,
@@ -51,16 +51,16 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[path][name].[ext]'
-            }
-          }
-        ]
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.svg/,
-        loader: 'url-loader?limit=26000&mimetype=image/svg+xml'
-      }
-    ]
+        loader: 'url-loader?limit=26000&mimetype=image/svg+xml',
+      },
+    ],
   },
 
   plugins: [
@@ -68,7 +68,7 @@ module.exports = {
       title: 'Spootifly Web',
       template: './public/index.html',
       filename: 'index.html',
-      jsExtension: '.gz'
-    })
-  ]
+      jsExtension: '.gz',
+    }),
+  ],
 };

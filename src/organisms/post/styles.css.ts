@@ -56,9 +56,11 @@ export const Header = styled.div`
 export const About = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 18px;
   background: transparent;
 `;
 
 export const Date = styled.div`
   color: #eee;
+  background: transparent;
 `;

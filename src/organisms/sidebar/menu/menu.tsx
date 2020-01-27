@@ -5,17 +5,15 @@ import { FeedIcon } from 'icons/feedIcon';
 
 export interface ISidebarProps {}
 
-const Menu: React.FC<ISidebarProps> = () => {
-  return (
-    <Container>
-      <Item>
-        <FeedIcon />
-      </Item>
-      <Item>
-        <FeedIcon />
-      </Item>
-    </Container>
-  );
-};
+const Menu: React.FC<ISidebarProps> = () => (
+  <Container>
+    <Item>
+      <FeedIcon />
+    </Item>
+    <Item>
+      <FeedIcon />
+    </Item>
+  </Container>
+);
 
 export default Menu;

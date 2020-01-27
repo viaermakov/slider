@@ -4,7 +4,7 @@ import { Button } from './styles.css';
 export interface IButtonProps extends React.ButtonHTMLAttributes<{}> {
   autoFocus?: boolean;
   className?: string;
-  component?: React.ElementType<any>;
+  component?: React.ElementType;
   href?: string;
   iconAfter?: React.ReactChild;
   iconBefore?: React.ReactChild;
@@ -14,12 +14,10 @@ export interface IButtonProps extends React.ButtonHTMLAttributes<{}> {
   children?: React.ReactNode;
 }
 
-const ButtonComponent: React.FC<IButtonProps> = ({ onClick, type = 'submit', children }) => {
-  return (
-    <Button onClick={onClick} type={type}>
-      {children}
-    </Button>
-  );
-};
+const ButtonComponent: React.FC<IButtonProps> = ({ onClick, type = 'submit', children }) => (
+  <Button onClick={onClick} type={type}>
+    {children}
+  </Button>
+);
 
 export default ButtonComponent;

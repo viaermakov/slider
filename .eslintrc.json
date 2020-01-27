@@ -151,13 +151,7 @@
       }
     ],
     "@typescript-eslint/interface-name-prefix": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_$"
-      }
-    ],
+    "@typescript-eslint/no-unused-vars": "off",
 
     "react/no-access-state-in-setstate": "error",
     "react/no-danger": "error",

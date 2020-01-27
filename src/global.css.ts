@@ -87,7 +87,6 @@ export const globals = css`
       padding: 0;
       border: 0;
       vertical-align: baseline;
-      background: #191818;
       color: #fff;
       font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell,
         'Open Sans', 'Helvetica Neue', sans-serif;
@@ -95,6 +94,7 @@ export const globals = css`
 
     html {
       transition: 0.3s;
+      background: #000;
     }
 
     /* HTML5 display-role reset for older browsers */

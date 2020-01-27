@@ -15,7 +15,7 @@ export const Container = styled.div`
   padding: 16px;
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.img<Props>`
   border-radius: 20px;
   height: ${({ small }: Props) => (small ? '65px' : '150px')};
   width: ${({ small }: Props) => (small ? '65px' : '150px')};
