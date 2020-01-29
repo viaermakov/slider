@@ -35,7 +35,7 @@ const Map: React.FC = () => {
       for (let i = 1; i < col.length; i++) {
         const rows = col[i].querySelectorAll('td');
         if (rows.length < 3) {
-          return null;
+          break;
         }
 
         let countryNode = rows[0].textContent ? rows[0].textContent.trim() : null;
@@ -67,8 +67,11 @@ const Map: React.FC = () => {
         }
       }
       Object.keys(data).forEach(key => {
-        data[key].gradation = Math.ceil(data[key].cases / maxCases);
+        const ratio = data[key].cases / maxCases;
+        const roundedRation = ratio < 0.1 ? ratio * 100 : ratio;
+        data[key].gradation = Number(roundedRation.toFixed(1));
       });
+
       return data;
     };
 

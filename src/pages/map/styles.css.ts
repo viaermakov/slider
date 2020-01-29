@@ -1,11 +1,14 @@
-import { styled } from 'linaria/react';
+import { countries } from './countries';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   margin: 2rem 20%;
 
-  path {
+  svg {
     fill: #383d45;
+  }
 
+  path {
     &:hover {
       fill: red;
     }
@@ -33,3 +36,38 @@ export const Text = styled.span`
 
   font-size: 0.9rem;
 `;
+
+export const Svg = styled.svg``;
+
+// export const Ab = styled.div`
+//   ${({ data }) => generateCSSClasses(data)};
+// `;
+
+// const generateCSSClasses = data => {
+//   console.log(data);
+//   console.log(Object.keys(data).length);
+
+//   if (!Object.keys(data).length) {
+//     return;
+//   }
+//   return Object.keys(data).map(country => {
+//     const countriesOb = countries.reduce((acc, item) => {
+//       acc[item.name] = item;
+//       return acc;
+//     }, {});
+
+//     if (!countriesOb[country] || !countriesOb[country].code) {
+//       return '';
+//     }
+//     console.log(`
+//     #${countriesOb[country].code}: {
+//       fill: rgba(247, 22, 67, ${data[country] ? data[country].gradation : 1})
+//     }
+//  `);
+//     return `
+//         #${countriesOb[country].code}: {
+//           fill: rgba(247, 22, 67, ${data[country] ? data[country].gradation : 1})
+//         }
+//      `;
+//   });
+// };
