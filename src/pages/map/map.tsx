@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { countries } from './countries';
+
 import SvgMap from './svgMap';
 import { Container, Tooltip, Title, Text } from './styles.css';
 
@@ -17,6 +19,19 @@ export interface IDataResponse {
   [key: string]: ICountry;
 }
 
+interface IDictionaryCountry {
+  name: string;
+  code: string;
+}
+interface INameToValueMap {
+  [key: string]: IDictionaryCountry;
+}
+
+const countriesOb: INameToValueMap = countries.reduce((acc: INameToValueMap, item) => {
+  acc[item.name] = item;
+  return acc;
+}, {});
+
 const Map: React.FC = () => {
   const [positionX, setPositionX] = React.useState<number>(0);
   const [positionY, setPositionY] = React.useState<number>(0);
@@ -25,6 +40,21 @@ const Map: React.FC = () => {
   const [data, setData] = React.useState<IDataResponse>({});
 
   React.useEffect(() => {
+    const generateStyles = (data: IDataResponse): void => {
+      Object.keys(data).forEach((country: string): void => {
+        if (!countriesOb[country] || !countriesOb[country].code) {
+          return;
+        }
+        const currentPath = document.querySelector(`.${countriesOb[country].code}`) as HTMLElement;
+        if (!currentPath) {
+          return;
+        }
+        currentPath.style.fill = `rgba(247, 22, 67, ${
+          data[country] ? data[country].gradation : 1
+        })`;
+      });
+    };
+
     const parseData = (html: string): IDataResponse | null => {
       const el = document.createElement('html');
       el.innerHTML = html;
@@ -69,7 +99,7 @@ const Map: React.FC = () => {
       Object.keys(data).forEach(key => {
         const ratio = data[key].cases / maxCases;
         const roundedRation = ratio < 0.1 ? ratio * 100 : ratio;
-        data[key].gradation = Number(roundedRation.toFixed(1));
+        data[key].gradation = 1.1 - Number(roundedRation.toFixed(1));
       });
 
       return data;
@@ -79,7 +109,10 @@ const Map: React.FC = () => {
       .then(response => response.text())
       .then(html => {
         const data = parseData(html);
-        data && setData(data);
+        if (data) {
+          setData(data);
+          generateStyles(data);
+        }
       })
       .catch(err => {
         // eslint-disable-next-line no-console
@@ -96,7 +129,7 @@ const Map: React.FC = () => {
 
   return (
     <Container>
-      <SvgMap onMouseOver={handleMouseEnter} data={data} />
+      <SvgMap onMouseOver={handleMouseEnter} />
       {true && (
         <Tooltip style={{ left: positionX + OFFSET, top: positionY + OFFSET }}>
           <Title>{country}</Title>

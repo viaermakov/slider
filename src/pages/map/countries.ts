@@ -1,4 +1,4 @@
-export const countries = [
+export const countries: Array<{ name: string; code: string }> = [
   { name: 'Afghanistan', code: 'AF' },
   { name: 'Åland Islands', code: 'AX' },
   { name: 'Albania', code: 'AL' },
@@ -115,7 +115,7 @@ export const countries = [
   { name: 'Kenya', code: 'KE' },
   { name: 'Kiribati', code: 'KI' },
   { name: "Korea, Democratic People'S Republic of", code: 'KP' },
-  { name: 'Korea, Republic of', code: 'KR' },
+  { name: 'South Korea', code: 'KR' },
   { name: 'Kuwait', code: 'KW' },
   { name: 'Kyrgyzstan', code: 'KG' },
   { name: "Lao People'S Democratic Republic", code: 'LA' },
