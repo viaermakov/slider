@@ -179,7 +179,7 @@ export const countries: Array<{ name: string; code: string }> = [
   { name: 'Qatar', code: 'QA' },
   { name: 'Reunion', code: 'RE' },
   { name: 'Romania', code: 'RO' },
-  { name: 'Russian Federation', code: 'RU' },
+  { name: 'Russia', code: 'RU' },
   { name: 'RWANDA', code: 'RW' },
   { name: 'Saint Helena', code: 'SH' },
   { name: 'Saint Kitts and Nevis', code: 'KN' },
@@ -242,4 +242,21 @@ export const countries: Array<{ name: string; code: string }> = [
   { name: 'Yemen', code: 'YE' },
   { name: 'Zambia', code: 'ZM' },
   { name: 'Zimbabwe', code: 'ZW' },
+];
+
+interface IGradation {
+  color: string;
+  percentage: number;
+}
+
+export const gradations: IGradation[] = [
+  { color: '4b4446', percentage: 0.000001 },
+  { color: '523d43', percentage: 0.000005 },
+  { color: '602e3d', percentage: 0.00001 },
+  { color: '6b2438', percentage: 0.0001 },
+  { color: '761933', percentage: 0.001 },
+  { color: '7d1230', percentage: 0.01 },
+  { color: '88072c', percentage: 0.1 },
+  { color: '88072c', percentage: 0.4 },
+  { color: '8f0028', percentage: 0.7 },
 ];

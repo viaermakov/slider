@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { countries } from './countries';
+import { countries, gradations } from './countries';
 
 import SvgMap from './svgMap';
 import { Container, Tooltip, Title, Text } from './styles.css';
@@ -49,9 +49,8 @@ const Map: React.FC = () => {
         if (!currentPath) {
           return;
         }
-        currentPath.style.fill = `rgba(247, 22, 67, ${
-          data[country] ? data[country].gradation : 1
-        })`;
+
+        currentPath.style.fill = data[country] ? gradations[data[country].gradation].color : '';
       });
     };
 
@@ -92,16 +91,27 @@ const Map: React.FC = () => {
             country: countryNode,
             cases: Number(cases),
             deaths: Number(deaths),
-            gradation: 1,
+            gradation: 0,
           };
         }
       }
       Object.keys(data).forEach(key => {
         const ratio = data[key].cases / maxCases;
-        const roundedRation = ratio < 0.1 ? ratio * 100 : ratio;
-        data[key].gradation = 1.1 - Number(roundedRation.toFixed(1));
+        for (let idx = 1; idx < gradations.length; idx++) {
+          if (ratio === 0) {
+            break;
+          }
+          if (ratio < gradations[0].percentage) {
+            data[key].gradation = 0;
+            break;
+          }
+          if (ratio > gradations[idx - 1].percentage && ratio < gradations[idx].percentage) {
+            data[key].gradation = idx;
+            break;
+          }
+          data[key].gradation = 8;
+        }
       });
-
       return data;
     };
 
@@ -121,7 +131,7 @@ const Map: React.FC = () => {
   }, []);
 
   const handleMouseEnter = (e: React.MouseEvent<SVGElement>): void => {
-    const currentCountry = (e.target as SVGElement).getAttribute('data-title') || 'sdsds';
+    const currentCountry = (e.target as SVGElement).getAttribute('data-title') || '';
     setCountry(currentCountry);
     setPositionX(e.pageX);
     setPositionY(e.pageY);

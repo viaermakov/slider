@@ -94,7 +94,7 @@ export const globals = css`
 
     html {
       transition: 0.3s;
-      background: #000;
+      background: #21252b;
     }
 
     /* HTML5 display-role reset for older browsers */
