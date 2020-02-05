@@ -21,17 +21,32 @@ export const Tooltip = styled.div`
   padding: 4px 8px;
   color: #000;
   border-radius: 4px;
-  width: 120px;
+  width: 220px;
   background: #545456;
   color: #eee;
 `;
 
-export const Title = styled.span`
+export const Title = styled.div`
+  display: flex;
+  align-items: center;
   position: relative;
   font-size: 1rem;
 `;
 
-export const Text = styled.span`
+export const Square = styled.div`
+  height: 10px;
+  width: 10px;
+  background: ${({ color }) => `${color}`};
+`;
+
+export const Feed = styled.div`
+  position: absolute;
+  top: 70%;
+  left: 16px;
+`;
+
+export const FeedItem = styled.div`
   position: relative;
-  font-size: 0.9rem;
+  width: 100%;
+  color: ${({ color }) => `${color}`};
 `;

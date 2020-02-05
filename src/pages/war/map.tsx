@@ -1,13 +1,11 @@
 import * as React from 'react';
 
-import { countries as countriesData, gradations, ICountry } from './countries';
+import { countries as countriesData, ICountry, countries } from './countries';
 
 import SvgMap from './svgMap';
-import { Container, Tooltip, Title, Text } from './styles.css';
+import { Container, Tooltip, Title, Square, Feed, FeedItem } from './styles.css';
 import { useAnimationFrame } from './hooks';
-
-const URL = 'https://en.wikipedia.org/api/rest_v1/page/html/2019–20_Wuhan_coronavirus_outbreak';
-const OFFSET = 20;
+import { getDiffieHellman } from 'crypto';
 
 interface IDictionaryCountry {
   name: string;
@@ -16,20 +14,19 @@ interface IDictionaryCountry {
   protectorate: Array<string>;
   power: number;
   independent: boolean;
-}
-interface INameToValueMap {
-  [key: string]: IDictionaryCountry;
+  color: string;
+  part: string;
 }
 
-const countriesOb: INameToValueMap = countriesData.reduce(
-  (acc: INameToValueMap, item): INameToValueMap => {
-    item.protectorate = [];
-    item.power = 10;
-    acc[item.name] = item;
-    return acc;
-  },
-  {},
-);
+const filledCountries: IDictionaryCountry[] = countries.map(item => ({
+  ...item,
+  protectorate: [],
+  enemies: [],
+  power: 100,
+  color: getRandomColor(),
+  independent: true,
+  part: '',
+}));
 
 function getRandom(min: number, max: number): number {
   // получить случайное число от (min-0.5) до (max+0.5)
@@ -45,27 +42,183 @@ function getRandomColor(): string {
   }
   return color;
 }
-countriesData.forEach(c => {
-  c.color = getRandomColor();
-});
+
+const getEnemy = (country: IDictionaryCountry, newCountries: IDictionaryCountry[]): number => {
+  const isReadyToWar = country.enemies.length > 0 && country.enemies.length < 3;
+  const noEnemies = country.enemies.length === 0;
+  const amountAll = getRandom(0, newCountries.length - 1);
+  if (noEnemies) {
+    country.enemies.push(newCountries[amountAll].name);
+    newCountries[amountAll].enemies.push(country.name);
+    return amountAll;
+  }
+
+  const amountEnemies = getRandom(0, country.enemies.length - 1);
+  const indexLast = newCountries.findIndex(item => item.name === country.enemies[amountEnemies]);
+  if (!isReadyToWar) {
+    return indexLast;
+  }
+  const startNewWar = getRandom(0, 1) === 1;
+
+  if (startNewWar) {
+    country.enemies.push(newCountries[amountAll].name);
+    newCountries[amountAll].enemies.push(country.name);
+    return amountAll;
+  }
+  return indexLast;
+};
+
+interface IEvent {
+  winner: IDictionaryCountry;
+  type: 'take' | 'take_dominion';
+  loser: IDictionaryCountry;
+  dominion?: IDictionaryCountry;
+}
+interface IReturnedDataOfYear {
+  countries: IDictionaryCountry[];
+  events: IEvent[];
+}
+
+const startEventsOfYear = (newCountries: IDictionaryCountry[]): IReturnedDataOfYear => {
+  const events: IEvent[] = [];
+  for (const country of newCountries) {
+    const attack = getRandom(1, 120);
+    // const defendedCountry = getEnemy(country, newCountries);
+    const defendedCountry = getRandom(0, newCountries.length - 1);
+
+    console.log(defendedCountry);
+    const defPower = newCountries[defendedCountry].power || 10;
+    const defProtectorate = newCountries[defendedCountry].protectorate || [];
+
+    if (country.name === newCountries[defendedCountry].name) {
+      continue;
+    }
+    if (!newCountries[defendedCountry].independent || !country.independent) {
+      continue;
+    }
+
+    if (attack > 100) {
+      if (defProtectorate.length > 0) {
+        const last = defProtectorate.length - 1;
+        const indexLast = newCountries.findIndex(item => item.name === defProtectorate[last]);
+
+        country.protectorate = [...country.protectorate, defProtectorate[last]];
+        // country.power += Math.round(newCountries[defendedCountry].power / 10);
+        // country.power -= country.protectorate.length * 5;
+
+        newCountries[indexLast].independent = false;
+        newCountries[indexLast].part = country.name;
+        newCountries[indexLast].color = country.color;
+
+        newCountries[defendedCountry].protectorate.splice(last, 1);
+        // newCountries[defendedCountry].power -= 10;
+
+        events.push({
+          winner: country,
+          type: 'take_dominion',
+          loser: newCountries[defendedCountry],
+          dominion: newCountries[indexLast],
+        });
+        continue;
+      }
+
+      // const idxEnemy = country.enemies.findIndex(
+      //   item => item === newCountries[defendedCountry].name,
+      // );
+
+      // const idxEnemy2 = newCountries[defendedCountry].enemies.findIndex(
+      //   item => item === country.name,
+      // );
+
+      // newCountries[defendedCountry].enemies.splice(idxEnemy2 - 1, 1);
+      // country.enemies.splice(idxEnemy - 1, 1);
+      country.protectorate = [...country.protectorate, newCountries[defendedCountry].name];
+      // country.power += newCountries[defendedCountry].power;
+
+      newCountries[defendedCountry].color = country.color;
+      // newCountries[defendedCountry].power = 0;
+      newCountries[defendedCountry].independent = false;
+      newCountries[defendedCountry].part = country.name;
+
+      events.push({
+        winner: country,
+        type: 'take',
+        loser: newCountries[defendedCountry],
+      });
+    } else {
+      if (country.protectorate.length > 0) {
+        const last = country.protectorate.length - 1;
+        const indexLast = newCountries.findIndex(item => item.name === country.protectorate[last]);
+
+        newCountries[defendedCountry].protectorate = [
+          ...defProtectorate,
+          country.protectorate[last],
+        ];
+        // newCountries[defendedCountry].power += Math.round(country.power / 10);
+        // newCountries[defendedCountry].power -= getDiffieHellman.length * 5;
+
+        newCountries[indexLast].color = newCountries[defendedCountry].color;
+        newCountries[indexLast].part = newCountries[defendedCountry].name;
+        newCountries[indexLast].independent = false;
+
+        country.protectorate.splice(last, 1);
+        // country.power -= 10;
+
+        events.push({
+          winner: newCountries[defendedCountry],
+          type: 'take_dominion',
+          loser: country,
+          dominion: newCountries[indexLast],
+        });
+        continue;
+      }
+
+      country.color = newCountries[defendedCountry].color;
+      country.part = newCountries[defendedCountry].name;
+      country.independent = false;
+
+      // const idxEnemy = newCountries[defendedCountry].enemies.findIndex(
+      //   item => item === country.name,
+      // );
+      // const idxEnemy2 = country.enemies.findIndex(
+      //   item => item === newCountries[defendedCountry].name,
+      // );
+      // newCountries[defendedCountry].enemies.splice(idxEnemy - 1, 1);
+      // country.enemies.splice(idxEnemy2 - 1, 1);
+      newCountries[defendedCountry].protectorate = [...defProtectorate, country.name];
+
+      events.push({
+        winner: newCountries[defendedCountry],
+        type: 'take',
+        loser: country,
+      });
+    }
+  }
+
+  return { countries: newCountries, events };
+};
+
 const Map: React.FC = () => {
   const [positionX, setPositionX] = React.useState<number>(0);
   const [positionY, setPositionY] = React.useState<number>(0);
-  const [time, setTime] = React.useState<number>(0);
+  const [country, setCountry] = React.useState<IDictionaryCountry | null>(null);
 
-  const [country, setCountry] = React.useState<string>('');
-  const [countries, setCountries] = React.useState<ICountry[]>(countriesData);
+  const [time, setTime] = React.useState<number>(0);
+  const [topCountries, setTopCountries] = React.useState<IDictionaryCountry[]>([]);
+  const [countries, setCountries] = React.useState<IDictionaryCountry[]>(filledCountries);
+  const [events, setEvents] = React.useState<IEvent[]>([]);
 
   useAnimationFrame(() => {
-    // if (time > 0) {
-    // setTime(prevCount => (prevCount + 60 * 0.01) % 100);
-    // console.log(countries.filter(item => item.independent === false).length);
-    // }
+    setTime(prevCount => prevCount + 1);
   });
 
   React.useEffect(() => {
+    // if (time % 50 !== 0) {
+    //   return;
+    // }
+
     const generateStyles = (data: ICountry[]): void => {
-      data.forEach((country: string): void => {
+      data.forEach((country: ICountry): void => {
         if (!country.code || !country.code) {
           return;
         }
@@ -77,86 +230,94 @@ const Map: React.FC = () => {
       });
     };
 
-    const newCountries = countries;
+    const annexedCountries = countries.filter(item => item.independent === false);
 
-    if (
-      newCountries.filter(item => item.independent === false).length ===
-      newCountries.length - 1
-    ) {
-      console.log('===');
+    if (annexedCountries.length === countries.length - 1) {
       return;
     }
-    console.log(newCountries.length);
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for (let idx = 0; idx < newCountries.length; idx++) {
-      const country: ICountry = newCountries[idx];
-      const attack = getRandom(1, 10);
-      const defendedCountry = getRandom(0, newCountries.length - 1);
 
-      console.log(idx);
-      const defPower = newCountries[defendedCountry].power || 10;
-      const defProtectorate = newCountries[defendedCountry].protectorate || [];
+    const { countries: newCountries, events } = startEventsOfYear(countries);
+    const topCountries = [...newCountries].sort(
+      (a, b) => b.protectorate.length - a.protectorate.length,
+    );
 
-      if (country.name === newCountries[defendedCountry].name) {
-        console.log('===');
-        break;
-      }
-
-      console.log(newCountries[defendedCountry], country.independent);
-
-      const allIndependent =
-        newCountries[defendedCountry].independent === false || country.independent === false;
-      if (allIndependent) {
-        break;
-      }
-
-      // if (attack > defPower) {
-      //   if (defProtectorate.length > 0) {
-      //     const last = defProtectorate.length - 1;
-      //     country.protectorate = [...country.protectorate, defProtectorate[last]];
-      //     newCountries[defendedCountry].color = country.color;
-      //     defProtectorate.splice(last - 1, 1);
-      //     break;
-      //   }
-      //   newCountries[defendedCountry].color = country.color;
-      //   country.protectorate = [...country.protectorate, newCountries[defendedCountry].name];
-      //   newCountries[defendedCountry].independent = false;
-      // } else {
-      //   if (country.protectorate.length > 0) {
-      //     const last = country.protectorate.length - 1;
-      //     newCountries[defendedCountry].protectorate = [
-      //       ...defProtectorate,
-      //       country.protectorate[last],
-      //     ];
-      //     country.color = newCountries[defendedCountry].color;
-
-      //     country.protectorate.splice(last - 1, 1);
-      //     break;
-      //   }
-      //   country.color = country.color;
-      //   newCountries[defendedCountry].protectorate = [...defProtectorate, country.name];
-      //   country.independent = false;
-      // }
-    }
     generateStyles(newCountries);
+    setEvents(events);
     setCountries(newCountries);
-  }, [countries]);
+    setTopCountries(topCountries);
+  }, [countries, time]);
 
   const handleMouseEnter = (e: React.MouseEvent<SVGElement>): void => {
     const currentCountry = (e.target as SVGElement).getAttribute('data-title') || '';
-    setCountry(currentCountry);
+    const country = countries.find(item => item.name === currentCountry) || null;
+    setCountry(country);
     setPositionX(e.pageX);
     setPositionY(e.pageY);
+  };
+
+  const renderEvents = (): React.ReactElement => (
+    <Feed>
+      {events.map((event: IEvent) => {
+        const { type, winner, loser } = event;
+        if (type === 'take') {
+          return (
+            <FeedItem color="red">
+              {time} day:
+              {winner.name} сonquer {loser.name}
+            </FeedItem>
+          );
+        }
+
+        const { dominion } = event;
+
+        return (
+          <FeedItem>
+            {time} day:
+            {winner.name} сonquered {dominion!.name} from {loser.name}
+          </FeedItem>
+        );
+      })}
+    </Feed>
+  );
+
+  const renderEnemies = (): React.ReactElement | null => {
+    if (!country) {
+      return null;
+    }
+    return (
+      <div>
+        {country.enemies.map(item => (
+          <span>{item},</span>
+        ))}
+      </div>
+    );
   };
 
   return (
     <Container>
       <SvgMap onMouseOver={handleMouseEnter} />
-      {true && (
-        <Tooltip style={{ left: positionX + OFFSET, top: positionY + OFFSET }}>
-          <Title>{country}</Title>
+      {topCountries.length > 0 && (
+        <Tooltip style={{ left: 20, top: 20 }}>
+          {topCountries.slice(0, 10).map(country => (
+            <Title>
+              {country.name} - {country.protectorate.length}
+              <div> Enemies: {renderEnemies}</div>
+              <Square color={country.color}></Square>
+            </Title>
+          ))}
         </Tooltip>
       )}
+      {country && (
+        <Tooltip style={{ left: positionX + 20, top: positionY + 20 }}>
+          <Title>
+            {country.name}
+            {country.part
+              ? ` belongs to ${country.part}`
+              : ` independent with ${country.protectorate.length} dominions`}
+          </Title>
+        </Tooltip>
+      )}
+      {renderEvents()}
     </Container>
   );
 };

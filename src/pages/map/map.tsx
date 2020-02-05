@@ -140,7 +140,7 @@ const Map: React.FC = () => {
   return (
     <Container>
       <SvgMap onMouseOver={handleMouseEnter} />
-      {true && (
+      {country && (
         <Tooltip style={{ left: positionX + OFFSET, top: positionY + OFFSET }}>
           <Title>{country}</Title>
           <Text>cases: {data[country] ? data[country].cases : 'NO cases'}</Text>
