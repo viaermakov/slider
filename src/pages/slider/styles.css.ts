@@ -9,12 +9,14 @@ export const Title = styled.h1`
 `;
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: ${({ type }: Props) =>
-    type === 'full' ? '300px 3fr 1fr' : '150px 3fr 1fr'};
-  grid-template-rows: 1fr;
-  grid-gap: 16px;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 20%;
+  color: #212121;
+
+  @media screen and (max-width: 1332px) {
+    margin: 2rem 8%;
+  }
 `;
 
 export const UserContainer = styled.section`
@@ -30,7 +32,7 @@ export const Feed = styled.section`
   margin: 16px;
 `;
 
-export const Preview = styled.section`
+export const Preview = styled.div`
   position: relative;
   height: 512px;
 `;

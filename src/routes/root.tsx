@@ -5,6 +5,7 @@ const SliderPage = React.lazy(() => import('../pages/slider/main'));
 const RegisterPage = React.lazy(() => import('../pages/register/register'));
 const War = React.lazy(() => import('../pages/war/map'));
 const Map = React.lazy(() => import('../pages/map/map'));
+const Spots = React.lazy(() => import('../pages/spots/main'));
 
 const Routes: React.FC<RouteProps> = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const Routes: React.FC<RouteProps> = () => (
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/war" component={War} />
         <Route exact path="/map" component={Map} />
+        <Route exact path="/spots" component={Spots} />
       </React.Suspense>
     </Switch>
   </BrowserRouter>

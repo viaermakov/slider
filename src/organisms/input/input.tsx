@@ -13,7 +13,7 @@ export interface IInputProps {
   placeholder?: string;
 }
 
-const TextareaСomponent: React.FC<IInputProps> = ({
+const InputСomponent: React.FC<IInputProps> = ({
   onBlur,
   onFocus,
   onChange,
@@ -37,7 +37,7 @@ const TextareaСomponent: React.FC<IInputProps> = ({
   };
 
   return (
-    <Container>
+    <Container className="field" isError={isError}>
       {label && <Label htmlFor={name}>{label}</Label>}
       <Input
         name={name}
@@ -46,9 +46,8 @@ const TextareaСomponent: React.FC<IInputProps> = ({
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        isError={isError}
       />
     </Container>
   );
 };
-export default TextareaСomponent;
+export default InputСomponent;

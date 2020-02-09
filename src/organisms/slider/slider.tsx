@@ -39,7 +39,7 @@ const Slider: React.FC<ISliderProps> = ({ images }) => {
 
   React.useEffect(() => {
     function handleResize(): void {
-      setCoverWidth(containerRef.current!.offsetWidth);
+      setCoverWidth(containerRef.current!.offsetWidth + 2);
     }
 
     handleResize();
@@ -89,12 +89,10 @@ const Slider: React.FC<ISliderProps> = ({ images }) => {
   );
 
   return (
-    <Container>
-      <Wrapper ref={containerRef} onClick={handleClick}>
-        {renderTabs()}
-        {renderCanvas()}
-      </Wrapper>
-    </Container>
+    <Wrapper ref={containerRef} onClick={handleClick}>
+      {renderTabs()}
+      {renderCanvas()}
+    </Wrapper>
   );
 };
 

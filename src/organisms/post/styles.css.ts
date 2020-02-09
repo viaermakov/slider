@@ -20,7 +20,6 @@ export const Text = styled.div`
   position: relative;
   padding: 16px 8px;
   font-size: 1.1rem;
-  background: #212224;
 `;
 
 export const ActionText = styled.span`
@@ -48,7 +47,7 @@ export const Header = styled.div`
   align-items: center;
   padding: 0 16px;
   height: 96px;
-  background: #212224;
+  background: #eee;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
 `;

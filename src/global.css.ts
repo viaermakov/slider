@@ -5,6 +5,7 @@ export const globals = css`
     html,
     body,
     div,
+    p,
     span,
     applet,
     object,
@@ -87,14 +88,14 @@ export const globals = css`
       padding: 0;
       border: 0;
       vertical-align: baseline;
-      color: #fff;
       font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell,
         'Open Sans', 'Helvetica Neue', sans-serif;
     }
 
     html {
       transition: 0.3s;
-      background: #21252b;
+      background: #f8f8fa;
+      /* background: #21252b; */
     }
 
     /* HTML5 display-role reset for older browsers */
@@ -150,9 +151,9 @@ export const globals = css`
       max-width: 100%;
     }
 
-    p {
+    /* p {
       margin: 0.7rem 0;
-    }
+    } */
 
     @media only screen and (max-width: 768px) {
       html {

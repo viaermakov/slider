@@ -10,30 +10,22 @@ interface Props {
 export const Wrapper = styled.div`
   position: relative;
   display: flex;
-  height: 100%;
+  max-height: 500px;
   overflow: hidden;
   border-radius: 10px;
   background: #eee;
   cursor: pointer;
 `;
 
-export const Container = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-`;
-
 export const Cover = styled.div`
   position: relative;
   height: 100%;
   width: ${({ width }: Props) => `${width}px`};
-  background: ${({ color }: Props) => `${color}`};
   order: ${({ order }: Props) => `${order}`};
 `;
 
 export const Canvas = styled.div`
   display: flex;
-  height: 100%;
   transition: 0.3s;
   transform: ${({ transform }: Props) => `translateX(-${transform}px)`};
 `;

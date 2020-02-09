@@ -9,7 +9,7 @@ import {
   Header,
   Avatar,
   About,
-  Date
+  Date,
 } from './styles.css';
 import { Comments } from 'organisms/comments';
 
@@ -22,9 +22,10 @@ const Post: React.FC<IPostProps> = ({ image, text }) => {
   const [isShow, setIsShow] = React.useState<boolean>(false);
   const isTextLong = text.length > 200;
 
-  const handleShow = () => {
+  const handleShow = (): void => {
     setIsShow((prev: boolean) => !prev);
   };
+
   return (
     <Container>
       <Header>

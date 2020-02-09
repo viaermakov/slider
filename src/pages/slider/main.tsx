@@ -11,21 +11,13 @@ export interface IMainProps {}
 const Main: React.FC<IMainProps> = (): React.ReactElement => {
   const images = ['src/assets/1.jpg', 'src/assets/2.jpg', 'src/assets/3.jpg'];
   return (
-    <>
-      <Container type="simple">
-        <UserContainer>
-          <Sidebar />
-        </UserContainer>
-        <Feed>
-          <Preview>
-            <Slider images={images} />
-          </Preview>
-          <FeedForm />
-          <Post image="src/assets/1.jpg" text={t} />
-          <Post image="src/assets/1.jpg" text={t} />
-        </Feed>
-      </Container>
-    </>
+    <Container type="simple">
+      <Feed>
+        <FeedForm />
+        <Post image="src/assets/1.jpg" text={t} />
+        <Post image="src/assets/1.jpg" text={t} />
+      </Feed>
+    </Container>
   );
 };
 
